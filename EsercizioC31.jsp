@@ -14,7 +14,7 @@
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Connection connection = DriverManager.getConnection(connectionUrl);
        
-        String sql = "SELECT * FROM Affitto where IDAppartamento=? and(( dataCheckIn<=?) and (dataCheckOut>=?)) ";
+        String sql = "SELECT * FROM Affitto where IDAppartamento=? and(( dataCheckIn>?) or (dataCheckOut<?)) ";
 		PreparedStatement st = connection.prepareStatement(sql);
     	st.setString(1, request.getParameter("appartamenti"));
     	st.setString(2, request.getParameter("datap"));
@@ -25,10 +25,10 @@
 		if (rs.next())
 		{
 		    
-		   out.print("l'appartamento è occupato");
+		   out.print("l'appartamento è libero");
     	}else
 		{
-		    out.print("l'appartamento è libero");
+		    out.print("l'appartamento è occupato");
 		}
 		
 		 rs.close();
